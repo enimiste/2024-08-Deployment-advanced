@@ -18,3 +18,4 @@ Project may be used as a basic Flow project for trainings:
 * Emailing in Jmix
 * Testing Jmix applications
 
+docker run -e VAULT_DEV_ROOT_TOKEN_ID=myroot -p 8200:8200 hashicorp/vault

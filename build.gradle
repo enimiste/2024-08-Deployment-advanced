@@ -1,6 +1,7 @@
 plugins {
     id 'io.jmix' version '2.3.1'
     id 'java'
+    id 'com.palantir.docker' version '0.36.0'
 }
 
 apply plugin: 'org.springframework.boot'
@@ -45,7 +46,18 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-vault-config:4.1.0'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     implementation 'org.postgresql:postgresql'
+
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-tomcat") {
+            replacedBy("org.springframework.boot:spring-boot-starter-undertow", "Use Undertow instead of Apache Tomcat")
+        }
+    }
+
+    implementation 'com.hazelcast:hazelcast'
 }
 
 test {
@@ -54,4 +66,11 @@ test {
 
 vaadin {
     optimizeBundle = false
+}
+
+docker {
+    dependsOn(tasks.bootJar)
+    name "$rootProject.name:$version"
+    dockerfile file('docker/Dockerfile.layered')
+    files tasks.bootJar.outputs
 }
