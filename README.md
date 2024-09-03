@@ -19,3 +19,5 @@ Project may be used as a basic Flow project for trainings:
 * Testing Jmix applications
 
 docker run -e VAULT_DEV_ROOT_TOKEN_ID=myroot -p 8200:8200 hashicorp/vault
+
+Kubernetes code added to the folder k8s
